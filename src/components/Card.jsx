@@ -4,7 +4,6 @@ import { CartContext } from "../context/CartContext";
 
 const Card = ({ price }) => {
   const { increment, decrement } = useContext(CartContext);
-  console.log("card render");
   return (
     <div className="card">
       Card {price}

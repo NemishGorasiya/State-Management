@@ -8,7 +8,6 @@ export const AuthContextProvider = ({ children }) => {
   const updateName = () => {
     setVal("New name");
   };
-  console.log("auth context render");
   return (
     <AuthContext.Provider value={{ val, updateName, val2 }}>
       {children}

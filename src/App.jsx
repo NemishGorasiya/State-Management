@@ -1,20 +1,34 @@
+import { useState } from "react";
 import "./App.css";
 import Cards from "./components/Cards";
 import Result from "./components/Result";
-import { AuthContextProvider } from "./context/AuthContext";
 import { CartContextProvider } from "./context/CartContext";
 
 function App() {
-  console.log("app render");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
-    <CartContextProvider>
-      <AuthContextProvider>
+    <>
+      <CartContextProvider>
         <div className="app">
           <Cards />
           <Result />
         </div>
-      </AuthContextProvider>
-    </CartContextProvider>
+      </CartContextProvider>
+      <button onClick={openModal}>open model</button>
+      {isModalOpen && (
+        <div data-testid="modal" id="modal">
+          this is modal
+          <button onClick={closeModal}>close</button>
+        </div>
+      )}
+    </>
   );
 }
 

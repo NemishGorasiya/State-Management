@@ -8,9 +8,8 @@ export const CartContextProvider = ({ children }) => {
     setVal((prev) => prev + 1);
   };
   const decrement = () => {
-    setVal((prev) => prev + 1);
+    setVal((prev) => prev - 1);
   };
-  console.log("cart context render");
   return (
     <CartContext.Provider value={{ val, increment, decrement }}>
       {children}
