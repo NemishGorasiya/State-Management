@@ -3,9 +3,13 @@ import "./App.css";
 import Cards from "./components/Cards";
 import Result from "./components/Result";
 import { CartContextProvider } from "./context/CartContext";
+import axios from "axios";
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [list, setList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -13,6 +17,21 @@ function App() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const callApi = async () => {
+    try {
+      setIsLoading(true);
+      const res = await axios.get("https://dummyjson.com/products?limit=10");
+      // setTimeout(() => {
+      setList(res.data.products);
+      setIsLoading(false);
+      // }, 1000);
+    } catch (error) {
+      console.log("error", error);
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <CartContextProvider>
@@ -21,7 +40,17 @@ function App() {
           <Result />
         </div>
       </CartContextProvider>
+      <button onClick={callApi}>API call</button>
+      {isLoading ? (
+        <h1>Loading....</h1>
+      ) : (
+        list.map((item) => {
+          return <div key={item.id}>{item.title}</div>;
+        })
+      )}
+
       <button onClick={openModal}>open model</button>
+
       {isModalOpen && (
         <div data-testid="modal" id="modal">
           this is modal
